@@ -1,0 +1,1779 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang-key="page_title">Business Analysis | حلول تحليل العملاء المحتملين للشركات</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" data-lang-key="meta_description" content="نقدم خدمة تحليل العملاء المحتملين لشركتك. احصل على تقارير دقيقة ورؤى استراتيجية لتحقيق نمو مستدام لأعمالك.">
+    <meta name="keywords" content="تحليل أعمال, تحليل عملاء محتملين, استراتيجية نمو, Business Analysis, Lead Analysis">
+    
+    <!-- Using a high-quality Arabic font and loading Tailwind for modern utility-first styling --><script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Tailwind Configuration for Apple-like aesthetics and preserving original colors --><script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#1a365d',
+                        'secondary-dark': '#1a202c',
+                        'whatsapp-green': '#25D366', // Original WhatsApp green (can be overridden by rgba below)
+                        'light-bg': '#f7fafc',
+                        'star-gold': '#FFD700', /* Gold color for stars */
+                        'brand-cta': 'rgba(67, 97, 238, 0.7)', /* New blue for CTA, with transparency */
+                        'brand-cta-hover': '#4361EE', /* Solid version for hover */
+                    },
+                    fontFamily: {
+                        sans: ['Cairo', 'Inter', 'sans-serif'],
+                    },
+                    spacing: {
+                        '100': '25rem',
+                        '120': '30rem',
+                        '144': '36rem',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Base styles for a clean, Apple-like look */
+        * { font-family: 'Cairo', 'Inter', 'sans-serif'; }
+        html { scroll-behavior: smooth; }
+        body { 
+            background-color: #1a365d; /* الخلفية الرئيسية ثابتة للون الأساسي */
+            min-height: 100vh; 
+        }
+
+        /* --- Custom Scroll Animations (Diverse) --- */
+        .animate-on-scroll { opacity: 0; }
+        .fade-in-up {
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.2, 0.6, 0.4, 1), transform 1s cubic-bezier(0.2, 0.6, 0.4, 1);
+        }
+        .fade-in-left {
+            transform: translateX(-40px);
+            transition: opacity 1s cubic-bezier(0.2, 0.6, 0.4, 1), transform 1s cubic-bezier(0.2, 0.6, 0.4, 1);
+        }
+        .fade-in-right {
+            transform: translateX(40px);
+            transition: opacity 1s cubic-bezier(0.2, 0.6, 0.4, 1), transform 1s cubic-bezier(0.2, 0.6, 0.4, 1);
+        }
+        /* Applied when in view */
+        .in-view { opacity: 1 !important; transform: translate(0) !important; }
+        /* End of Custom Scroll Animations */
+
+
+        /* Hero text typing effect cursor */
+        .typed-text {
+            border-right: 3px solid white;
+            animation: blink 1s infinite;
+            display: inline-block;
+        }
+        @keyframes blink {
+            0%, 100% { border-color: white; }
+            50% { border-color: transparent; }
+        }
+
+        /* ADJUSTED: Background setup for Fixed Background */
+        body {
+            position: relative;
+        }
+        /* التعديل: تغيير الموضع لـ absolute للسماح بالاختفاء مع التمرير */
+#parallax-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background-image: url('photo_2_2025-10-25_17-12-52.jpg');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+    filter: brightness(0.7) contrast(1) blur(0px);
+    transition: filter 0.8s ease-out, opacity 0.8s ease-out;
+    opacity: 1;
+    pointer-events: none;
+    
+    /* الحل: تحديد ارتفاع الخلفية لينتهي عند نهاية الصورة */
+    background-color: #1a365d; /* لون الخلفية الأساسي */
+    background-blend-mode: overlay;
+}
+
+/* طبقة تدرج لوني سلس للانتقال */
+#parallax-background::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(to bottom, 
+        transparent 0%, 
+        #1a365d 80%);
+    z-index: 1;
+}
+
+        /* Glassy/Translucent Header effect */
+        .header-bg-scrolled {
+            background-color: rgba(26, 54, 93, 0.95); /* primary-dark */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Floating CTA card styling - FIXED VISIBILITY FOR MOBILE AND ADDED GLASSINESS */
+        .whatsapp-card {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.05);
+            transition: all 0.4s ease-out;
+            transform: translateY(20px) scale(0.95);
+            opacity: 0;
+            background-color: rgba(255, 255, 255, 0.85); /* Added subtle glassiness */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .whatsapp-card.show {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .hero {
+            /* The hero text needs to be highly readable */
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8); 
+        }
+
+        /* Global image styling: Remove borders, keep shadow */
+        img {
+            border-width: 0 !important;
+        }
+
+        /* Process Card Image Styling for Overlays */
+        .process-img-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-md/lg */
+        }
+
+        .process-img-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+            padding: 1.5rem 1rem 0.75rem;
+            color: white;
+            text-align: center;
+        }
+        .process-img-overlay h3 {
+            margin: 0;
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+        }
+
+        /* Ensure main content is above fixed background and remove dark element issue */
+        main {
+            position: relative;
+            z-index: 1;
+            /* التعديل: الخلفية الرئيسية للمحتوى تتحول للون الداكن */
+            background-color: #1a202c; 
+            transition: background-color 1s ease; /* إضافة انيميشن للتغيير اللوني */
+        }
+
+        /* NEW: Glassy Card Effect for ALL Content Cards */
+        .glassy-card {
+            background-color: rgba(255, 255, 255, 0.1); /* Very slight white tint */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            color: white; /* Ensure text inside is white/light */
+        }
+        .glassy-card h2, .glassy-card h3, .glassy-card h4 {
+            color: white !important;
+        }
+        /* Overriding text colors inside glassy card to white/light for main content */
+        .glassy-card p, .glassy-card span, .glassy-card li {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+        /* Specific override for CTA section which has a glassy background already */
+        #contact .glassy-card {
+            background-color: transparent;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            border: none;
+            box-shadow: none;
+        }
+        
+        /* --- Border Spin Animation (Applied to all CTA Buttons) --- */
+        .cta-button-wrapper {
+            position: relative;
+            display: inline-flex; 
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 50px; /* ليتناسب مع شكل الزرار */
+            padding: 0 !important;
+        }
+        
+        .border-spin-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50px;
+            z-index: 10;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .border-spin {
+            position: absolute;
+            top: -200%;
+            left: -200%;
+            width: 400%;
+            height: 400%;
+            background: conic-gradient(
+                transparent, 
+                transparent, 
+                transparent, 
+                rgba(255, 255, 255, 0.9)
+            );
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .cta-button-wrapper:hover .border-spin {
+            animation: border-spin-animation 1.5s linear infinite;
+            opacity: 1;
+        }
+
+        @keyframes border-spin-animation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .cta-button-wrapper .button-content {
+            position: relative;
+            z-index: 20;
+            display: inherit;
+            align-items: inherit;
+            justify-content: inherit;
+        }
+        /* --- End Border Spin Animation --- */
+
+
+        /* --- Section Divider Styling --- */
+        .section-divider {
+            height: 2px; /* Increased thickness */
+            width: 90%; /* Increased width */
+            max-width: 1200px; /* Max width constraint */
+            margin: 80px auto 80px auto; /* Increased margin for visibility */
+            background: linear-gradient(to right, 
+                                rgba(255, 255, 255, 0) 0%, 
+                                rgba(255, 255, 255, 0.3) 50%, /* Slightly more opaque */
+                                rgba(255, 255, 255, 0) 100%);
+            /* Ensure it is visible above the dark background */
+            position: relative; 
+            z-index: 1; 
+        }
+
+        /* --- Testimonials Carousel Styling --- */
+        .testimonials-section {
+            background-color: transparent; 
+            padding: 100px 0;
+            overflow: hidden;
+        }
+
+        /* Testimonial Card Text Override (Must be dark for white card background) */
+        .testimonial-card h4 {
+            color: #1a365d !important; /* primary-dark */
+        }
+        .testimonial-card p {
+            color: #4a5568 !important; /* gray */
+        }
+        
+        /* NEW: Glassy Container for Testimonials Background (Slightly darker glass for contrast) */
+        /* Applied to section wrapper, not inner container for full width effect */
+        .testimonials-glass-section {
+            background-color: rgba(26, 32, 44, 0.8); /* secondary-dark with opacity */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        .carousel-container {
+            overflow-x: auto; 
+            white-space: nowrap; 
+            position: relative;
+            padding: 0 1rem; 
+            scroll-snap-type: x mandatory; 
+        }
+
+        /* IMPROVED: Carousel Track for consistent spacing */
+        .carousel-track {
+            display: grid; 
+            grid-auto-flow: column; 
+            grid-auto-columns: minmax(320px, 1fr); 
+            gap: 20px; 
+            padding-right: 20px; 
+        }
+
+        .testimonial-card {
+            width: 100%; 
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            cursor: grab;
+            background-color: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            white-space: normal; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            /* Fixed spacing issue between cards */
+            margin-bottom: 0 !important; 
+        }
+        
+        /* IMPROVED: Scrollbar Styling for Webkit Browsers (Chrome, Safari) */
+        .carousel-container::-webkit-scrollbar {
+            height: 12px;
+        }
+        .carousel-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        .carousel-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3); /* Lighter thumb on dark track */
+            border-radius: 10px;
+            border: 3px solid rgba(255, 255, 255, 0); /* Transparent border for padding */
+        }
+        .carousel-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .rating-stars {
+            color: #FFD700; /* Ensure star color is gold */
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        /* --- Splash Screen Styling (Updated for Sizing and No Wrap) --- */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #1a202c; /* secondary-dark, matching footer */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000; /* Ensure it's on top of everything */
+            color: white;
+            opacity: 1;
+            transition: opacity 0.5s ease-out; /* Smooth fade out */
+        }
+
+        #splash-screen.fade-out {
+            opacity: 0;
+            pointer-events: none; /* Make it unclickable after fade out */
+        }
+
+        #splash-text {
+            /* Desktop/Default Size */
+            font-size: 2.5rem; 
+            font-weight: 700;
+            overflow: hidden;
+            border-right: 3px solid white; 
+            animation: typing 1s steps(40, end) forwards, blink-splash-cursor 0.75s step-end infinite;
+            max-width: 90vw; /* Use 90vw to be safe on desktop */
+            padding-right: 3px; 
+            width: 0;
+            white-space: nowrap; /* Prevent wrapping during animation on desktop */
+        }
+        
+        /* New class to allow wrapping after typing animation on mobile */
+        #splash-text.wrap-text {
+            white-space: normal !important;
+            width: auto !important;
+        }
+
+
+        /* Final width should be 100% of content */
+        @keyframes typing {
+            to { width: 100%; border-right: none; }
+        }
+
+        @keyframes blink-splash-cursor {
+            from, to { border-color: transparent }
+            50% { border-color: white }
+        }
+        /* End Splash Screen Styling */
+
+
+        /* --- Mobile Optimization (Shrinking text/elements) --- */
+        @media (max-width: 768px) {
+            /* Shrink hero text */
+            .hero h2 { font-size: 2.2rem !important; }
+            .hero p { font-size: 1rem !important; }
+
+            /* Splash Text Sizing for Mobile (Adjusted size to 1.1rem for full visibility) */
+            #splash-text {
+                font-size: 1.1rem !important; 
+            }
+            
+            /* Shrink main content titles */
+            h2, h3 { font-size: 1.5rem !important; }
+            
+            /* Shrink paragraph text */
+            p, .text-lg, .text-xl { font-size: 0.9rem !important; }
+            
+            /* Shrink button size for mobile consistency (MUST use !important to override desktop/default size) */
+            .cta-button-wrapper a, .cta-button-wrapper .button-content {
+                padding: 10px 20px !important; 
+                font-size: 0.8rem !important;
+            }
+            
+            /* Target specific CTA button sizes in non-hero sections */
+            /* Buttons in Benefits (Benefit 1-6) */
+            .benefit-card a.cta-button-wrapper .button-content {
+                padding: 8px 16px !important; /* Smaller size for card buttons */
+                font-size: 0.75rem !important;
+            }
+            /* Button in Final CTA/Contact section & Footer CTA */
+            #contact .cta-button-wrapper .button-content, 
+            .footer-column .cta-button-wrapper .button-content {
+                padding: 12px 24px !important; /* Slightly larger than card buttons */
+                font-size: 1rem !important;
+            }
+            
+            /* Mobile adjustment for Value Proposition icons/text stack */
+            #value-proposition .flex-col-reverse .flex {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            #value-proposition .flex-col-reverse .ml-4 {
+                margin-left: 0;
+                margin-bottom: 10px;
+            }
+            
+            /* Mobile adjustment for Report Features icons/text stack */
+            #report .feature {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            #report .feature .ml-4 {
+                margin-left: 0;
+                margin-bottom: 10px;
+            }
+        }
+        
+        /* LTR/English specific overrides for spacing to prevent overlap */
+        html[dir="ltr"] .cta-button-wrapper .button-content i {
+            /* Fix margin for LTR icons like WhatsApp button, moving margin to the right */
+            margin-right: 0.5rem !important;
+            margin-left: 0 !important;
+        }
+        html[dir="ltr"] .cta-button-wrapper:has(span[data-lang-key="cta_discover"]) .button-content i {
+            /* Fix margin for "Discover How We Work" arrow (fas fa-arrow-left) in LTR */
+            transform: rotate(180deg); /* Flip arrow for LTR */
+            margin-left: 0.5rem !important;
+            margin-right: 0 !important;
+        }
+        
+        /* LTR adjustments for feature/objection alignment */
+        html[dir="ltr"] .text-center { text-align: center; }
+        html[dir="ltr"] .text-right { text-align: left; }
+        html[dir="ltr"] .lg\:text-right { text-align: left; }
+
+        html[dir="ltr"] .border-r-4 { border-right: none; border-left: 4px solid; }
+        html[dir="ltr"] .pr-4 { padding-right: 0; padding-left: 1rem; }
+        html[dir="ltr"] .ml-3 { margin-left: 0; margin-right: 0.75rem; }
+        html[dir="ltr"] .ml-2 { margin-left: 0; margin-right: 0.5rem; }
+        html[dir="ltr"] .ml-4 { margin-left: 0; margin-right: 1rem; }
+        html[dir="ltr"] .mr-auto { margin-right: 0 !important; margin-left: auto !important; }
+
+        /* Mobile specific fixes for LTR (Feature/Objection icons must stay centered in mobile) */
+        @media (max-width: 768px) {
+            html[dir="ltr"] .feature, html[dir="ltr"] .flex-col-reverse .flex {
+                align-items: center !important;
+                text-align: center !important;
+            }
+            html[dir="ltr"] .feature .ml-0, html[dir="ltr"] .flex-col-reverse .ml-0 {
+                margin-right: 0 !important;
+                margin-left: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans text-secondary-dark antialiased" data-lang="ar">
+    <!-- Splash Screen --><div id="splash-screen">
+        <div class="text-center flex flex-col items-center">
+            <!-- Added data-lang-key for translation of splash text -->
+            <p id="splash-text" style="width: 0;" data-lang-key="splash_text">Business Analysis: هي العقل الذكي الذي يقرأ السوق بشكل احترافي</p>
+            <div id="analysis-icon-wrapper" class="analysis-icon-container">
+                <div class="analysis-dot"></div>
+                <div class="analysis-dot"></div>
+                <div class="analysis-dot"></div>
+                <div class="analysis-dot"></div>
+                <div class="analysis-dot"></div>
+            </div>
+            <!-- Logo placement below text and icon --><div id="splash-logo" class="flex items-center space-x-3 space-x-reverse">
+                <div class="w-16 h-16 rounded-full overflow-hidden border border-gray-300/30 shadow-md">
+                    <img src="photo_3_2025-10-25_17-12-52.jpg" alt="Business Analysis Logo">
+                </div>
+                <!-- Updated logo to single full text -->
+                <h3 class="text-4xl font-extrabold text-white tracking-tight" data-lang-key="logo_full">Business Analysis</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: Fixed Background Container (Now fading to body background) --><div id="parallax-background"></div>
+
+    <!-- WhatsApp Message Card (Floating UI Element) --><div id="whatsappCard" class="whatsapp-card fixed bottom-28 right-5 z-50 w-72 md:w-80 bg-white rounded-xl p-5 border border-gray-100">
+        <!-- New Professional Card Header with Expert Look --><div class="flex items-center mb-3 border-r-4 border-whatsapp-green pr-3">
+            <div class="w-10 h-10 bg-primary-dark flex items-center justify-center text-white text-lg ml-3">
+                <i class="fas fa-headset"></i> <!-- Icon for expert/support --></div>
+            <div>
+                <h3 class="text-lg font-bold text-primary-dark" data-lang-key="whatsapp_card_title">خبير التحليل في انتظارك</h3>
+                <p class="text-xs text-gray-500" data-lang-key="whatsapp_card_status">متوفر الآن للبدء</p>
+            </div>
+            <button id="closeCard" class="text-gray-400 hover:text-secondary-dark transition mr-auto">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <!-- New Stimulating Message --><p class="text-sm text-gray-700 mb-4 leading-relaxed font-semibold" data-lang-key="whatsapp_card_message">
+            حان وقت الكشف عن استراتيجيتك القادمة. تحدث مع خبيرنا الآن وابدأ رحلة النمو!
+        </p>
+        <a href="https://wa.me/201034927416?text=مرحباً، أريد الاستفسار عن خدمة تحليل العملاء المحتملين" class="whatsapp-card-btn bg-whatsapp-green text-white py-2.5 rounded-full text-sm font-semibold hover:bg-green-600 transition duration-300 flex items-center justify-center space-x-2 space-x-reverse" target="_blank">
+            <i class="fab fa-whatsapp text-lg"></i> <span data-lang-key="whatsapp_card_cta">تواصل مع الخبير فوراً</span>
+        </a>
+    </div>
+
+    <!-- Floating WhatsApp Button (Mobile & Standard) --><div class="fixed bottom-6 right-6 z-50">
+        <a href="https://wa.me/201034927416?text=مرحباً، أريد الاستفسار عن خدمة تحليل العملاء المحتملين" target="_blank" class="flex items-center justify-center w-14 h-14 bg-brand-cta rounded-full text-white text-2xl shadow-xl hover:scale-105 transition-transform duration-300">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <!-- Header (Sticky, Translucent) --><header id="header" class="fixed top-0 w-full z-40 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo --><a href="#home" class="flex items-center space-x-3 space-x-reverse transition-opacity duration-300 hover:opacity-80">
+                    <div class="w-10 h-10 rounded-full overflow-hidden border border-gray-300/30 shadow-md">
+                        <img src="photo_3_2025-10-25_17-12-52.jpg" alt="Business Analysis Logo">
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-white tracking-tight" data-lang-key="logo_full">Business Analysis</h3>
+                </a>
+                
+                <!-- Desktop Navigation -->
+                <nav id="nav" class="hidden lg:block">
+                    <ul class="flex space-x-8 space-x-reverse">
+                        <li><a href="#home" class="text-white text-sm font-medium hover:text-gray-300 transition-colors relative group py-2" data-lang-key="nav_home">الرئيسية<span class="absolute bottom-0 right-0 h-0.5 bg-white w-0 group-hover:w-full transition-all duration-300"></span></a></li>
+                        <li><a href="#value-proposition" class="text-white text-sm font-medium hover:text-gray-300 transition-colors relative group py-2" data-lang-key="nav_why_us">لماذا نحن<span class="absolute bottom-0 right-0 h-0.5 bg-white w-0 group-hover:w-full transition-all duration-300"></span></a></li>
+                        <li><a href="#problem" class="text-white text-sm font-medium hover:text-gray-300 transition-colors relative group py-2" data-lang-key="nav_problem">المشكلة<span class="absolute bottom-0 right-0 h-0.5 bg-white w-0 group-hover:w-full transition-all duration-300"></span></a></li>
+                        <li><a href="#process" class="text-white text-sm font-medium hover:text-gray-300 transition-colors relative group py-2" data-lang-key="nav_how_we_work">كيف نعمل<span class="absolute bottom-0 right-0 h-0.5 bg-white w-0 group-hover:w-full transition-all duration-300"></span></a></li>
+                        <li><a href="#report" class="text-white text-sm font-medium hover:text-gray-300 transition-colors relative group py-2" data-lang-key="nav_report">التقرير<span class="absolute bottom-0 right-0 h-0.5 bg-white w-0 group-hover:w-full transition-all duration-300"></span></a></li>
+                        <li><a href="#benefits" class="text-white text-sm font-medium hover:text-gray-300 transition-colors relative group py-2" data-lang-key="nav_benefits">الفوائد<span class="absolute bottom-0 right-0 h-0.5 bg-white w-0 group-hover:w-full transition-all duration-300"></span></a></li>
+                        <li><a href="#testimonials" class="text-white text-sm font-medium hover:text-gray-300 transition-colors relative group py-2" data-lang-key="nav_clients">العملاء<span class="absolute bottom-0 right-0 h-0.5 bg-white w-0 group-hover:w-full transition-all duration-300"></span></a></li>
+                    </ul>
+                </nav>
+
+                <!-- CTA Button & Mobile Menu Button -->
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <!-- NEW: Language Toggle Button -->
+                    <button id="langToggle" class="text-white text-sm font-medium p-2 rounded-full bg-white/10 hover:bg-white/30 transition-colors" data-lang-key="lang_toggle">English</button>
+
+                    <!-- HEADER CTA BUTTON (Border Spin Applied) -->
+                    <a href="https://wa.me/201034927416?text=مرحباً، أريد الاستفسار عن خدمة تحليل العملاء المحتملين" class="cta-button-wrapper hidden md:flex items-center text-white bg-primary-dark/80 backdrop-blur-sm px-5 py-2.5 rounded-full text-sm font-semibold border border-white/30 hover:bg-white hover:text-primary-dark transition-all duration-300" target="_blank">
+                        <span class="button-content px-4 py-2" data-lang-key="cta_header"><i class="fab fa-whatsapp ml-2"></i> راسلنا</span>
+                        <div class="border-spin-wrapper"><div class="border-spin"></div></div>
+                    </a>
+                    <button id="mobileMenuBtn" class="lg:hidden text-white text-2xl p-2 transition-transform hover:scale-105">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Overlay --><div id="mobileMenu" class="lg:hidden fixed inset-0 top-20 bg-primary-dark/95 backdrop-blur-md transition-transform duration-300 ease-in-out transform -translate-x-full">
+            <ul class="flex flex-col p-6 space-y-4 text-center">
+                <li><a href="#home" class="block text-white text-lg py-3 hover:bg-white/10 rounded-lg transition-colors" data-lang-key="nav_home">الرئيسية</a></li>
+                <li><a href="#value-proposition" class="block text-white text-lg py-3 hover:bg-white/10 rounded-lg transition-colors" data-lang-key="nav_why_us">لماذا نحن</a></li>
+                <li><a href="#problem" class="block text-white text-lg py-3 hover:bg-white/10 rounded-lg transition-colors" data-lang-key="nav_problem">المشكلة</a></li>
+                <li><a href="#process" class="block text-white text-lg py-3 hover:bg-white/10 rounded-lg transition-colors" data-lang-key="nav_how_we_work">كيف نعمل</a></li>
+                <li><a href="#report" class="block text-white text-lg py-3 hover:bg-white/10 rounded-lg transition-colors" data-lang-key="nav_report">التقرير</a></li>
+                <li><a href="#benefits" class="block text-white text-lg py-3 hover:bg-white/10 rounded-lg transition-colors" data-lang-key="nav_benefits">الفوائد</a></li>
+                <li><a href="#testimonials" class="block text-white text-lg py-3 hover:bg-white/10 rounded-lg transition-colors" data-lang-key="nav_clients">آراء العملاء</a></li>
+                <li>
+                    <!-- Mobile CTA Button (Border Spin Applied) -->
+                    <a href="https://wa.me/201034927416?text=مرحباً، أريد الاستفسار عن خدمة تحليل العملاء المحتملين" class="mt-4 inline-flex items-center justify-center w-full text-primary-dark bg-white px-6 py-3 rounded-full text-base font-bold hover:bg-gray-200 transition-all cta-button-wrapper" target="_blank">
+                        <span class="button-content px-4 py-2" data-lang-key="cta_mobile"><i class="fab fa-whatsapp ml-2"></i> راسلنا الآن</span>
+                        <div class="border-spin-wrapper"><div class="border-spin"></div></div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content Area --><main class="relative z-10">
+        <!-- H1 Tag for SEO --><h1 class="sr-only" data-lang-key="h1_seo">حلول تحليل العملاء المحتملين للشركات لتحقيق نمو مستدام</h1>
+
+        <!-- Hero Section (Full Height, Immersive) --><section class="min-h-screen flex items-center justify-center pt-24 pb-16 w-full" id="home">
+            <div class="max-w-6xl mx-auto px-4 text-center">
+                <div class="space-y-8">
+                    <!-- Adjusted to H2 for SEO flow -->
+                    <h2 class="text-5xl md:text-7xl font-extrabold leading-tight text-white tracking-tighter" style="text-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+                        <!-- The text content here will be managed by the typewriter, using textToType variable -->
+                        <span id="typed-text" class="min-h-[60px] md:min-h-[80px] inline-block"></span>
+                    </h2>
+                    <p data-lang-key="hero_subtext" class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto animate-on-scroll fade-in-up" data-delay="1000">
+                        نقدم خدمة تحليل العملاء المحتملين التي تحول بياناتك إلى رؤى استراتيجية قابلة للتطبيق لتحقيق نمو مستدام لأعمالك
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 sm:space-x-reverse pt-6 animate-on-scroll fade-in-up" data-delay="1500">
+                        <!-- HERO BUTTON 1 - DISCOVER HOW WE WORK (Border Spin Applied) -->
+                        <a href="#process" class="cta-button-wrapper border border-white/20 hover:border-white/20 bg-white/10 backdrop-blur-md text-white rounded-full text-lg font-bold shadow-2xl hover:bg-white/20 transition-colors inline-flex items-center justify-center">
+                            <span class="button-content px-8 py-4" data-lang-key="cta_discover">اكتشف كيف نعمل <i class="fas fa-arrow-left mr-2"></i></span>
+                            <div class="border-spin-wrapper"><div class="border-spin"></div></div>
+                        </a>
+                        <!-- HERO BUTTON 2 - WHATSAPP (Border Spin Applied) -->
+                        <a href="https://wa.me/201034927416?text=مرحباً، أريد الاستفسار عن خدمة تحليل العملاء المحتملين" class="cta-button-wrapper border border-blue-500/50 hover:border-blue-500/50 bg-brand-cta backdrop-blur-md text-white rounded-full text-lg font-bold shadow-2xl hover:bg-brand-cta-hover transition-colors inline-flex items-center justify-center" target="_blank">
+                            <span class="button-content px-8 py-4" data-lang-key="cta_whatsapp"><i class="fab fa-whatsapp ml-2"></i> راسلنا على الواتساب</span>
+                            <div class="border-spin-wrapper"><div class="border-spin"></div></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="section-divider"></div>
+
+        <!-- NEW SECTION: Value Proposition & Overcoming Objections --><section class="py-24 w-full" id="value-proposition">
+            <div class="max-w-7xl mx-auto px-4">
+                <!-- REMOVED glassy-card class from outer div -->
+                <div class="rounded-3xl p-6 md:p-12 lg:p-16 animate-on-scroll fade-in-up">
+                    <div class="text-center mb-16">
+                        <span class="font-semibold text-sm uppercase tracking-widest block mb-2 text-white/80" data-lang-key="value_tag">قيمة استثنائية</span>
+                        <h2 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight text-white" data-lang-key="value_title">جودة تحليل استثنائية، أسعار ليست كبيرة</h2>
+                        <p class="text-xl max-w-3xl mx-auto text-white/80" data-lang-key="value_subtext">
+                            نقدم تحليل أعمال متميز بأسعار تنافسية لأننا نؤمن بأن كل صاحب مشروع يستحق فرصة النجاح. خبرتنا المتخصصة تمكننا من تقديم تحليلات دقيقة وفعالة بتكلفة تناسبك.
+                        </p>
+                    </div>
+
+                    <div class="grid lg:grid-cols-1 gap-12 items-center">
+                        <!-- Solutions to Objections -->
+                        <div class="space-y-12">
+                            <h3 class="text-3xl font-extrabold mb-6 text-center text-white animate-on-scroll fade-in-up" data-delay="100" data-lang-key="value_objection_title">كيف نتغلب على مخاوف عملائنا؟</h3>
+                            
+                            <!-- Objection 1: Lack of Trust -->
+                            <!-- UPDATED: Added responsive classes for vertical stacking on mobile -->
+                            <div class="flex flex-col md:flex-row items-center md:items-start glassy-card p-6 rounded-xl border border-white/10 animate-on-scroll fade-in-left" data-delay="300">
+                                <div class="w-12 h-12 bg-white/20 text-white rounded-full flex items-center justify-center text-2xl ml-4 flex-shrink-0 shadow-md mb-4 md:mb-0">
+                                    <i class="fas fa-handshake"></i>
+                                </div>
+                                <div class="text-center md:text-right">
+                                    <h4 class="text-xl font-bold mb-2" data-lang-key="objection1_title">ثقة تامة في خدمتنا</h4>
+                                    <p class="text-lg" data-lang-key="objection1_text">
+                                        نعالج عدم الثقة في الخدمة غير الملموسة بتقديم عينات من عملنا السابق (عند الطلب) وشهادات عملاء موثوقين، بالإضافة إلى ضمان جودة النتائج. أنت ترى القيمة قبل أن تستثمر بشكل كامل.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Objection 2: Price Sensitivity -->
+                            <!-- UPDATED: Added responsive classes for vertical stacking on mobile -->
+                            <div class="flex flex-col md:flex-row items-center md:items-start glassy-card p-6 rounded-xl border border-white/10 animate-on-scroll fade-in-right" data-delay="500">
+                                <div class="w-12 h-12 bg-white/20 text-white rounded-full flex items-center justify-center text-2xl ml-4 flex-shrink-0 shadow-md mb-4 md:mb-0">
+                                    <i class="fas fa-wallet"></i>
+                                </div>
+                                <div class="text-center md:text-right">
+                                    <h4 class="text-xl font-bold mb-2" data-lang-key="objection2_title">أسعار تنافسية ومُجدية</h4>
+                                    <p class="text-lg" data-lang-key="objection2_text">
+                                        نقدم حلولاً مرنة تتناسب مع الميزانيات المحدودة، مع التركيز على العائد على الاستثمار. تحليلنا ليس مجرد تكلفة، بل استثمار يعود عليك بفوائد أكبر بكثير.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Objection 3: Single Expert Doubt -->
+                            <!-- UPDATED: Added responsive classes for vertical stacking on mobile -->
+                            <div class="flex flex-col md:flex-row items-center md:items-start glassy-card p-6 rounded-xl border border-white/10 animate-on-scroll fade-in-up" data-delay="700">
+                                <div class="w-12 h-12 bg-white/20 text-white rounded-full flex items-center justify-center text-2xl ml-4 flex-shrink-0 shadow-md mb-4 md:mb-0">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <div class="text-center md:text-right">
+                                    <h4 class="text-xl font-bold mb-2" data-lang-key="objection3_title">خبرة متكاملة ونتائج دقيقة</h4>
+                                    <p class="text-lg" data-lang-key="objection3_text">
+                                        نؤمن بقوة الخبرة المتخصصة والعميقة. خبرائنا يمتلكون سنوات من الممارسة والأبحاث المتواصلة التي تضمن دقة التحليل وعمقه، وهو ما يفوق أحياناً الجهد المتفرق لفريق كبير.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Problem Section (Asymmetrical Card) --><section class="py-24 w-full" id="problem">
+            <div class="max-w-7xl mx-auto px-4">
+                <!-- REMOVED glassy-card class from outer div -->
+                <div class="rounded-3xl p-6 md:p-12 lg:p-16 animate-on-scroll fade-in-up">
+                    <div class="grid lg:grid-cols-2 gap-12 items-center">
+                        <!-- Image Block --><div class="lg:order-last animate-on-scroll fade-in-right">
+                            <!-- REMOVED p-4 and inner div background to prevent artifact --><div class="rounded-2xl shadow-lg overflow-hidden transform hover:scale-[1.01] transition-transform duration-500">
+                                <img src="photo_13_2025-10-25_17-09-44.jpg" alt="التحدي الذي يواجه أصحاب المشاريع" class="w-full h-auto rounded-xl transition duration-500 hover:opacity-90 shadow-lg">
+                            </div>
+                        </div>
+                        
+                        <!-- Text Block --><div class="lg:order-first animate-on-scroll fade-in-left">
+                            <h2 class="text-4xl font-extrabold mb-6 leading-snug text-white" data-lang-key="problem_title">
+                                التحدي الذي يواجه معظم أصحاب المشاريع
+                            </h2>
+                            <p class="text-lg mb-4 text-white/80" data-lang-key="problem_text_1">
+                                يعاني العديد من أصحاب المشاريع الناشئة والصغيرة من نفس التحدي: من هم عملائي الحقيقيون؟ وما الذي يدفعهم للشراء؟
+                            </p>
+                            <p class="text-lg mb-4 border-r-4 border-white pr-4 text-white/80" data-lang-key="problem_text_2">
+                                كثير منهم يتخذ قراراته بناءً على افتراضات غامضة بدلًا من حقائق واضحة، وهنا تبدأ الخسارة أو البطء في النمو.
+                            </p>
+                            <p class="text-lg text-white/80" data-lang-key="problem_text_3">
+                                عدم وضوح هوية العملاء واحتياجاتهم الحقيقية يعيق حتى أكثر الأفكار واعدة.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Process Section (Stepped Cards) - GLASSY CARD --><section class="py-24 w-full" id="process">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-16 animate-on-scroll fade-in-up">
+                    <span class="font-semibold text-sm uppercase tracking-widest block mb-2 text-white/80" data-lang-key="process_tag">منهجية العمل</span>
+                    <h2 class="text-4xl md:text-5xl font-extrabold mb-4 text-white" data-lang-key="process_title">كيف نقوم بتحليل عملائك المحتملين</h2>
+                    <p class="text-xl max-w-3xl mx-auto text-white/80" data-lang-key="process_subtext">عملية مدروسة بدقة شديدة من مصادر كبيرة لتحويل البيانات المعقدة إلى رؤى واضحة</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    
+                    <!-- Step 1: Data Collection --><div class="process-step glassy-card rounded-2xl shadow-xl p-8 border-t-8 border-white/20 animate-on-scroll fade-in-up" data-delay="0">
+                        <!-- Image Block with Title Overlay --><div class="mb-6 process-img-container shadow-lg"> 
+                            <img src="photo_2025-10-25_17-09-55.jpg" alt="جمع البيانات" class="w-full h-auto"> 
+                            <div class="process-img-overlay">
+                                <h3 data-lang-key="step1_title">جمع البيانات</h3>
+                            </div>
+                        </div>
+                        
+                        <!-- Removed Icon Block --><h3 class="text-2xl font-bold mb-4 hidden" data-lang-key="step1_title_hidden">جمع البيانات</h3>
+                        <p class="mb-6" data-lang-key="step1_desc">نقوم بجمع البيانات الأساسية عن مشروعك دون الحاجة إلى معلومات سرية.</p>
+                        <ul class="text-right space-y-3 list-none pr-0 pt-4 border-t border-white/20">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-white/80 ml-3 mt-1"></i> <span data-lang-key="step1_point_1">اسم مشروعك ومجال عملك</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-white/80 ml-3 mt-1"></i> <span data-lang-key="step1_point_2">نوع المنتج أو الخدمة المقدمة</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-white/80 ml-3 mt-1"></i> <span data-lang-key="step1_point_3">طريقة البيع (أونلاين أو في مكان معين)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-white/80 ml-3 mt-1"></i> <span data-lang-key="step1_point_4">أكثر الأسئلة والاعتراضات تكرارًا</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Step 2: Research & Analysis --><div class="process-step glassy-card rounded-2xl shadow-xl p-8 border-t-8 border-white/20 animate-on-scroll fade-in-up" data-delay="200">
+                        <!-- Image Block with Title Overlay --><div class="mb-6 process-img-container shadow-lg"> 
+                            <img src="photo_2025-10-25_17-09-12.jpg" alt="البحث والتحليل" class="w-full h-auto"> 
+                            <div class="process-img-overlay">
+                                <h3 data-lang-key="step2_title">البحث والتحليل</h3>
+                            </div>
+                        </div>
+
+                        <!-- Removed Icon Block --><h3 class="text-2xl font-bold mb-4 hidden" data-lang-key="step2_title_hidden">البحث والتحليل</h3>
+                        <p class="mb-6" data-lang-key="step2_desc_1">نقوم بالبحث والتحليل العميق بناءً على خطط مدروسة بدقة وعناية شديدة. هذا الأساس الذي بنينا عليه شركتنا.</p>
+                        <p class="text-sm mt-6" data-lang-key="step2_desc_2">لتحصل على أكثر فائدة ممكنة من تحليل العملاء المحتملين الخاص بك، نستخدم أدوات ومنهجيات متقدمة.</p>
+                    </div>
+
+                    <!-- Step 3: Report Delivery --><div class="process-step glassy-card rounded-2xl shadow-xl p-8 border-t-8 border-white/20 animate-on-scroll fade-in-up" data-delay="400">
+                         <!-- Image Block with Title Overlay --><div class="mb-6 process-img-container shadow-lg"> 
+                            <img src="photo_2025-10-25_17-09-58.jpg" alt="تسليم التقرير" class="w-full h-auto"> 
+                            <div class="process-img-overlay">
+                                <h3 data-lang-key="step3_title">تسليم التقرير</h3>
+                            </div>
+                        </div>
+
+                        <!-- Removed Icon Block --><h3 class="text-2xl font-bold mb-4 hidden" data-lang-key="step3_title_hidden">تسليم التقرير</h3>
+                        <p class="mb-6" data-lang-key="step3_desc_1">نقوم بتسليمك ملف PDF شامل يحتوي على كل ما تحتاج لمعرفته عن عملائك المحتملين.</p>
+                        <p class="text-sm mt-6" data-lang-key="step3_desc_2">التقرير سيساعدك على فهم عملائك بشكل أعمق واتخاذ قرارات تسويقية أكثر فعالية لتحقيق أهدافك.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Report Section (Grid of Features) - GLASSY CARD --><section class="py-24 w-full" id="report">
+            <div class="max-w-7xl mx-auto px-4">
+                <!-- REMOVED glassy-card class from outer div -->
+                <div class="rounded-3xl p-6 md:p-12 lg:p-16 animate-on-scroll fade-in-up">
+                    <div class="grid lg:grid-cols-2 gap-12 items-start">
+                        <!-- Image Block --><div class="relative lg:order-last animate-on-scroll fade-in-right">
+                            <!-- REMOVED p-4 and inner div background to prevent artifact --><div class="rounded-2xl shadow-lg sticky top-28 transform hover:scale-[1.01] transition-transform duration-500">
+                                <img src="photo_2025-10-25_17-10-04.jpg" alt="تقرير PDF" class="w-full h-auto object-cover rounded-xl shadow-xl">
+                            </div>
+                        </div>
+
+                        <!-- Text & Features Block --><div class="lg:order-first space-y-8">
+                            <h2 class="text-4xl font-extrabold leading-snug text-white" data-lang-key="report_title">
+                                ماذا يحتوي التقرير؟
+                            </h2>
+                            <p class="text-lg text-white/80" data-lang-key="report_subtext">
+                                تقريرنا الشامل سيمنحك صورة كاملة عن عملائك المحتملين لتمكنك من اتخاذ قرارات استراتيجية مدروسة.
+                            </p>
+                            
+                            <!-- Feature Grid -->
+                            <!-- To fix LTR text overlap: Ensure sufficient vertical margin and use responsive padding for shorter text blocks in Arabic vs longer in English -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+                                
+                                <div class="feature flex flex-col items-center text-center md:flex-row md:items-start md:text-right glassy-card p-6 rounded-xl animate-on-scroll fade-in-left" data-delay="0">
+                                    <div class="w-10 h-10 bg-white/20 text-white rounded-lg flex items-center justify-center text-xl ml-0 md:ml-4 flex-shrink-0 shadow-md mb-2 md:mb-0">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="md:pr-0">
+                                        <h4 class="text-lg font-bold mb-1" data-lang-key="feature1_title">العميل المحتمل</h4>
+                                        <p class="text-sm" data-lang-key="feature1_text">المعلومات الديموغرافية، مكان السكن، السلوك، أماكن التواجد على وسائل التواصل</p>
+                                    </div>
+                                </div>
+                                <div class="feature flex flex-col items-center text-center md:flex-row md:items-start md:text-right glassy-card p-6 rounded-xl animate-on-scroll fade-in-right" data-delay="150">
+                                    <div class="w-10 h-10 bg-white/20 text-white rounded-lg flex items-center justify-center text-xl ml-0 md:ml-4 flex-shrink-0 shadow-md mb-2 md:mb-0">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </div>
+                                    <div class="md:pr-0">
+                                        <h4 class="text-lg font-bold mb-1" data-lang-key="feature2_title">دوافع الشراء</h4>
+                                        <p class="text-sm" data-lang-key="feature2_text">الأسباب التي تدفعهم للشراء والمشاكل التي يواجهونها</p>
+                                    </div>
+                                </div>
+                                <div class="feature flex flex-col items-center text-center md:flex-row md:items-start md:text-right glassy-card p-6 rounded-xl animate-on-scroll fade-in-left" data-delay="300">
+                                    <div class="w-10 h-10 bg-white/20 text-white rounded-lg flex items-center justify-center text-xl ml-0 md:ml-4 flex-shrink-0 shadow-md mb-2 md:mb-0">
+                                        <i class="fas fa-times-circle"></i>
+                                    </div>
+                                    <div class="md:pr-0">
+                                        <h4 class="text-lg font-bold mb-1" data-lang-key="feature3_title">معوقات الشراء</h4>
+                                        <p class="text-sm" data-lang-key="feature3_text">الأسباب التي تخيفهم من الشراء وتمنعهم من اتخاذ القرار</p>
+                                    </div>
+                                </div>
+                                <div class="feature flex flex-col items-center text-center md:flex-row md:items-start md:text-right glassy-card p-6 rounded-xl animate-on-scroll fade-in-right" data-delay="450">
+                                    <div class="w-10 h-10 bg-white/20 text-white rounded-lg flex items-center justify-center text-xl ml-0 md:ml-4 flex-shrink-0 shadow-md mb-2 md:mb-0">
+                                        <i class="fas fa-heart"></i>
+                                    </div>
+                                    <div class="md:pr-0">
+                                        <h4 class="text-lg font-bold mb-1" data-lang-key="feature4_title">الاهتمامات</h4>
+                                        <p class="text-sm" data-lang-key="feature4_text">مجالات اهتماماتهم وأنشطتهم المفضلة</p>
+                                    </div>
+                                </div>
+                                <div class="feature flex flex-col items-center text-center md:flex-row md:items-start md:text-right glassy-card p-6 rounded-xl animate-on-scroll fade-in-left" data-delay="600">
+                                    <div class="w-10 h-10 bg-white/20 text-white rounded-lg flex items-center justify-center text-xl ml-0 md:ml-4 flex-shrink-0 shadow-md mb-2 md:mb-0">
+                                        <i class="fas fa-lightbulb"></i>
+                                    </div>
+                                    <div class="md:pr-0">
+                                        <h4 class="text-lg font-bold mb-1" data-lang-key="feature5_title">فكرة تسويقية</h4>
+                                        <p class="text-sm" data-lang-key="feature5_text">فكرة تسويقية مناسبة لاستهدافهم بشكل فعال</p>
+                                    </div>
+                                </div>
+                                <div class="feature flex flex-col items-center text-center md:flex-row md:items-start md:text-right glassy-card p-6 rounded-xl animate-on-scroll fade-in-right" data-delay="750">
+                                    <div class="w-10 h-10 bg-white/20 text-white rounded-lg flex items-center justify-center text-xl ml-0 md:ml-4 flex-shrink-0 shadow-md mb-2 md:mb-0">
+                                        <i class="fas fa-chart-bar"></i>
+                                    </div>
+                                    <div class="md:pr-0">
+                                        <h4 class="text-lg font-bold mb-1" data-lang-key="feature6_title">المنافسين</h4>
+                                        <p class="text-sm" data-lang-key="feature6_text">تحليل المنافسين ونقاط قوتهم وضعفهم</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+                            <!-- Implementation Note - ADJUSTED grid-column to span full 2 columns in large screens -->
+                            <div class="p-6 glassy-card border-r-8 border-white/40 rounded-xl shadow-inner mt-8 animate-on-scroll fade-in-up lg:col-span-2" data-delay="900">
+                                <h4 class="text-xl font-bold mb-3" data-lang-key="report_note_title">توجيهات عملية للتنفيذ</h4>
+                                <p data-lang-key="report_note_text">سنزودك أيضاً بتوجيهات عملية حول كيفية تنفيذ هذه الرؤى وتحويلها إلى إجراءات ملموسة تحقق النتائج المرجوة. ستتعلم كيفية تطبيق كل بند من بنود التقرير بشكل عملي لتحقيق أقصى استفادة من البيانات التي نحصل عليها.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Benefits Section (Grid) - GLASSY CARD --><section class="py-24 w-full" id="benefits">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-16 animate-on-scroll fade-in-up">
+                    <span class="font-semibold text-sm uppercase tracking-widest block mb-2 text-white/80" data-lang-key="benefits_tag">القيمة المضافة</span>
+                    <h2 class="text-4xl md:text-5xl font-extrabold mb-4 text-white" data-lang-key="benefits_title">ماذا سوف تستفيد من هذا التقرير؟</h2>
+                    <p class="text-xl max-w-3xl mx-auto text-white/80" data-lang-key="benefits_subtext">فوائد استراتيجية ستغير طريقة عملك بشكل جذري</p>
+                </div>
+                
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Benefit 1 --><div class="benefit-card glassy-card rounded-xl p-8 shadow-lg border-none hover:shadow-xl transition duration-500 animate-on-scroll fade-in-up" data-delay="0">
+                        <!-- Removed fixed height h-24 and h-full object-cover for natural aspect ratio --><div class="w-24 mx-auto mb-5 rounded-xl overflow-hidden shadow-md transform hover:scale-105 transition duration-300 bg-white/10">
+                            <img src="photo_2025-10-25_17-10-07.jpg" alt="تشكيل المنتج حسب العميل" class="w-full h-auto shadow-md">
+                        </div>
+                        <h3 class="text-xl font-bold mb-3" data-lang-key="benefit1_title">تشكيل المنتج حسب العميل</h3>
+                        <p data-lang-key="benefit1_text">ستكون قادرًا على تشكيل منتجك أو خدمتك على مقاس عميلك بالتفصيل، وعندما تفعل هذا تبدأ نقطة نجاحك.</p>
+                    </div>
+
+                    <!-- Benefit 2 --><div class="benefit-card glassy-card rounded-xl p-8 shadow-lg border-none hover:shadow-xl transition duration-500 animate-on-scroll fade-in-up" data-delay="150">
+                        <!-- Removed fixed height h-24 and h-full object-cover for natural aspect ratio --><div class="w-24 mx-auto mb-5 rounded-xl overflow-hidden shadow-md transform hover:scale-105 transition duration-300 bg-white/10">
+                            <img src="photo_2025-10-25_17-10-10.jpg" alt="استهداف دقيق" class="w-full h-auto shadow-md">
+                        </div>
+                        <h3 class="text-xl font-bold mb-3" data-lang-key="benefit2_title">استهداف دقيق</h3>
+                        <p data-lang-key="benefit2_text">ستكون قادرًا على استهداف العملاء بشكل دقيق وفعال، والوصول إلى العملاء المحتملين الذين قد يكون من الصعب الوصول إليهم.</p>
+                    </div>
+
+                    <!-- Benefit 3 --><div class="benefit-card glassy-card rounded-xl p-8 shadow-lg border-none hover:shadow-xl transition duration-500 animate-on-scroll fade-in-up" data-delay="300">
+                        <!-- Removed fixed height h-24 and h-full object-cover for natural aspect ratio --><div class="w-24 mx-auto mb-5 rounded-xl overflow-hidden shadow-md transform hover:scale-105 transition duration-300 bg-white/10">
+                            <img src="photo_11_2025-10-25_17-09-44.jpg" alt="التواصل الفعال" class="w-full h-auto shadow-md">
+                        </div>
+                        <h3 class="text-xl font-bold mb-3" data-lang-key="benefit3_title">التواصل الفعال</h3>
+                        <p data-lang-key="benefit3_text">ستكون قادرًا على التعامل مع عملائك من حيث عدة جوانب مثل عملية البيع والتحدث معهم وتبرير السعر.</p>
+                    </div>
+
+                    <!-- Benefit 4 --><div class="benefit-card glassy-card rounded-xl p-8 shadow-lg border-none hover:shadow-xl transition duration-500 animate-on-scroll fade-in-up" data-delay="450">
+                        <!-- Removed fixed height h-24 and h-full object-cover for natural aspect ratio --><div class="w-24 mx-auto mb-5 rounded-xl overflow-hidden shadow-md transform hover:scale-105 transition duration-300 bg-white/10">
+                            <img src="photo_2025-10-25_17-10-12.jpg" alt="حل المشكلات" class="w-full h-auto shadow-md">
+                        </div>
+                        <h3 class="text-xl font-bold mb-3" data-lang-key="benefit4_title">حل المشكلات</h3>
+                        <p data-lang-key="benefit4_text">ستكون قادرًا على حل أي مشكلة تواجه عملائك عند استخدامهم لخدمتك أو منتجك بشكل سهل.</p>
+                    </div>
+
+                    <!-- Benefit 5 --><div class="benefit-card glassy-card rounded-xl p-8 shadow-lg border-none hover:shadow-xl transition duration-500 animate-on-scroll fade-in-up" data-delay="600">
+                        <!-- Removed fixed height h-24 and h-full object-cover for natural aspect ratio --><div class="w-24 mx-auto mb-5 rounded-xl overflow-hidden shadow-md transform hover:scale-105 transition duration-300 bg-white/10">
+                            <img src="photo_10_2025-10-25_17-09-44.jpg" alt="عميل أكثر تفاعلاً" class="w-full h-auto shadow-md">
+                        </div>
+                        <h3 class="text-xl font-bold mb-3" data-lang-key="benefit5_title">عميل أكثر تفاعلاً</h3>
+                        <p data-lang-key="benefit5_text">عميلك سيكون أكثر تفاعلاً معك عندما تقدم له ما يريده بالضبط لأنك ستكون قد فهمت عميلك.</p>
+                    </div>
+
+                    <!-- Benefit 6 --><div class="benefit-card glassy-card rounded-xl p-8 shadow-lg border-none hover:shadow-xl transition duration-500 animate-on-scroll fade-in-up" data-delay="750">
+                        <!-- Removed fixed height h-24 and h-full object-cover for natural aspect ratio --><div class="w-24 mx-auto mb-5 rounded-xl overflow-hidden shadow-md transform hover:scale-105 transition duration-300 bg-white/10">
+                            <img src="photo_2025-10-25_17-10-25.jpg" alt="نمو مستدام" class="w-full h-auto shadow-md">
+                        </div>
+                        <h3 class="text-xl font-bold mb-3" data-lang-key="benefit6_title">نمو مستدام</h3>
+                        <p data-lang-key="benefit6_text">عندما يكون منتجك أو خدمتك على مقاس عميلك المحتمل، سيكون من السهل على عميلك الوصول إليك.</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- NEW: Testimonials Section (Scrolling Carousel) - GLASSY & STATIC SCROLL -->
+        <section class="testimonials-section w-full" id="testimonials">
+            <div class="max-w-7xl mx-auto px-4">
+                
+                <!-- Applied glassy card class to the inner content container here -->
+                <div class="glassy-card rounded-3xl p-6 md:p-12 lg:p-16 animate-on-scroll fade-in-up">
+                    <div class="text-center mb-10 px-4">
+                        <span class="font-semibold text-sm uppercase tracking-widest block mb-2" data-lang-key="testimonial_tag">كلمة عملائنا</span>
+                        <h2 class="text-4xl md:text-5xl font-extrabold mb-4" data-lang-key="testimonial_title">آراء العملاء</h2>
+                        <p class="text-xl max-w-3xl mx-auto" data-lang-key="testimonial_subtext">قصص نجاح حقيقية تحققت بفضل تحليل العملاء المحتملين الدقيق</p>
+                    </div>
+                
+                    <!-- Carousel Container --><div class="carousel-container">
+                        <div class="carousel-track">
+                            <!-- Set 1 of Testimonials (Original) - Quotes now use data-lang-key to be dynamic -->
+                            <div class="testimonial-card">
+                                <div class="rating-stars mb-4">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-lg italic mb-6 leading-relaxed text-gray-700" data-lang-key="quote1_text">"كنت متشككاً في البداية، لكن التحليل كشف لي فرصاً في السوق لم أكن أتخيل وجودها. زادت مبيعاتي بنسبة 60% بعد تطبيق التوصيات."</p>
+                                <h4 class="font-bold text-xl text-primary-dark" data-lang-key="quote1_name">رائد أعمال</h4>
+                                <p class="text-sm text-gray-500" data-lang-key="quote1_role">مؤسس مشروع تقني</p>
+                            </div>
+                            <div class="testimonial-card">
+                                <div class="rating-stars mb-4">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-lg italic mb-6 leading-relaxed text-gray-700" data-lang-key="quote2_text">"التكلفة كانت أقل بكثير مما توقعت. التحليل كان شاملاً ومفصلاً، وساعدني في تعديل استراتيجيتي وتجنب العديد من الأخطاء."</p>
+                                <h4 class="font-bold text-xl text-primary-dark" data-lang-key="quote2_name">سارة الخالد</h4>
+                                <p class="text-sm text-gray-500" data-lang-key="quote2_role">مالكة متجر إلكتروني</p>
+                            </div>
+                            <div class="testimonial-card">
+                                <div class="rating-stars mb-4">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-lg italic mb-6 leading-relaxed text-gray-700" data-lang-key="quote3_text">"لم يكن تحليلاً تقليدياً، بل دراسة متعمقة لمشروعي بالكامل. التوصيات كانت عملية وقابلة للتنفيذ وفعلاً حققت نتائج ملموسة."</p>
+                                <h4 class="font-bold text-xl text-primary-dark" data-lang-key="quote3_name">خالد السعدي</h4>
+                                <p class="text-sm text-gray-500" data-lang-key="quote3_role">مؤسس شركة ناشئة</p>
+                            </div>
+                            <div class="testimonial-card">
+                                <div class="rating-stars mb-4">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-lg italic mb-6 leading-relaxed text-gray-700" data-lang-key="quote4_text">"كنت أعتقد أن تحليل الأعمال رفاهية، لكنه كان أفضل استثمار قمت به. وفر علي آلاف الدولارات ووفر وقتاً ثميناً."</p>
+                                <h4 class="font-bold text-xl text-primary-dark" data-lang-key="quote4_name">فاطمة القحطاني</h4>
+                                <p class="text-sm text-gray-500" data-lang-key="quote4_role">مديرة مشاريع</p>
+                            </div>
+                            <div class="testimonial-card">
+                                <div class="rating-stars mb-4">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-lg italic mb-6 leading-relaxed text-gray-700" data-lang-key="quote5_text">"التحليل كشف لي نقاط ضعف في مشروعي لم أكن أدركها. بعد المعالجة، زادت أرباحي بنسبة 40% في أقل من 3 أشهر."</p>
+                                <h4 class="font-bold text-xl text-primary-dark" data-lang-key="quote5_name">أحمد المرشدي</h4>
+                                <p class="text-sm text-gray-500" data-lang-key="quote5_role">صاحب مطعم</p>
+                            </div>
+                            <div class="testimonial-card">
+                                <div class="rating-stars mb-4">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-lg italic mb-6 leading-relaxed text-gray-700" data-lang-key="quote6_text">"الشيء الأهم أن التحليل كان مخصصاً لمشروعي وليس قالباً جاهزاً. هذا ما جعله دقيقاً ومفيداً حقاً."</p>
+                                <h4 class="font-bold text-xl text-primary-dark" data-lang-key="quote6_name">نورة الرشيد</h4>
+                                <p class="text-sm text-gray-500" data-lang-key="quote6_role">مستثمرة</p>
+                            </div>
+                            <div class="testimonial-card">
+                                <div class="rating-stars mb-4">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-lg italic mb-6 leading-relaxed text-gray-700" data-lang-key="quote7_text">"الدعم المستمر بعد التسليم كان مميزاً. لم أتوقع أن أحصل على كل هذه القيمة بهذا السعر المعقول."</p>
+                                <h4 class="font-bold text-xl text-primary-dark" data-lang-key="quote7_name">يوسف الحربي</h4>
+                                <p class="text-sm text-gray-500" data-lang-key="quote7_role">مطور تطبيقات</p>
+                            </div>
+                            <div class="testimonial-card">
+                                <div class="rating-stars mb-4">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-lg italic mb-6 leading-relaxed text-gray-700" data-lang-key="quote8_text">"تحليل السوق الذي قدموه كان مفصلاً ودقيقاً. ساعدني في تحديد شريحة العملاء المناسبة وتصميم حملات تسويقية ناجحة."</p>
+                                <h4 class="font-bold text-xl text-primary-dark" data-lang-key="quote8_name">لمى العتيبي</h4>
+                                <p class="text-sm text-gray-500" data-lang-key="quote8_role">صاحبة ماركة أزياء</p>
+                            </div>
+                            <div class="testimonial-card">
+                                <div class="rating-stars mb-4">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-lg italic mb-6 leading-relaxed text-gray-700" data-lang-key="quote9_text">"كنت أعاني من تراجع المبيعات، تحليل الأعمال كشف الأسباب الحقيقية ووضع خطة علاجية. خلال شهرين، عادت المبيعات للنمو."</p>
+                                <h4 class="font-bold text-xl text-primary-dark" data-lang-key="quote9_name">طارق الفهد</h4>
+                                <p class="text-sm text-gray-500" data-lang-key="quote9_role">مسوق إلكتروني</p>
+                            </div>
+                            <div class="testimonial-card">
+                                <div class="rating-stars mb-4">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-lg italic mb-6 leading-relaxed text-gray-700" data-lang-key="quote10_text">"التحليل ساعد فريق المبيعات لدينا على فهم لغة العميل الحقيقية. تحسنت نسبة الإغلاق بشكل ملحوظ وزاد متوسط قيمة الصفقة."</p>
+                                <h4 class="font-bold text-xl text-primary-dark" data-lang-key="quote10_name">هناء السليم</h4>
+                                <p class="text-sm text-gray-500" data-lang-key="quote10_role">مديرة مبيعات</p>
+                            </div>
+                            
+                            <!-- Note: Duplication kept for potential smooth visual effect, but animation is removed.--></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- CTA Section (Dark, Full Width) - ADDED GLASSINESS --><section class="py-24 bg-primary-dark/80 backdrop-blur-md text-white shadow-inner w-full" id="contact">
+            <div class="max-w-5xl mx-auto px-4 text-center animate-on-scroll fade-in-up">
+                <div class="space-y-6">
+                    <h2 class="text-4xl md:text-5xl font-extrabold leading-snug" data-lang-key="cta_final_title">هل أنت جاهز للنمو؟</h2>
+                    <p class="text-xl text-gray-300 max-w-3xl mx-auto" data-lang-key="cta_final_subtext">ابدأ رحلة التحول الاستراتيجي وارتقِ بأعمالك إلى مستويات جديدة من النجاح</p>
+                    <!-- FINAL CTA BUTTON (Border Spin Applied) -->
+                    <a href="https://wa.me/201034927416?text=مرحباً، أريد الاستفسار عن خدمة تحليل العملاء المحتملين" class="cta-button-wrapper mt-8 inline-flex items-center bg-brand-cta text-white rounded-full text-xl font-bold shadow-xl hover:bg-brand-cta-hover transition-colors transform hover:scale-105 duration-300" target="_blank">
+                        <span class="button-content px-8 py-4" data-lang-key="cta_whatsapp"><i class="fab fa-whatsapp ml-3 text-2xl"></i> راسلنا على الواتساب</span>
+                        <div class="border-spin-wrapper"><div class="border-spin"></div></div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (Dark Theme) --><footer class="bg-secondary-dark text-white pt-20 pb-8 w-full">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-10 border-b border-gray-700 pb-10 mb-8">
+                <!-- Column 1: Logo & Description --><div class="col-span-2 lg:col-span-1">
+                    <div class="flex items-center space-x-3 space-x-reverse mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden border-none shadow-md">
+                            <img src="photo_3_2025-10-25_17-12-52.jpg" alt="Business Analysis Logo">
+                        </div>
+                        <!-- Updated logo to single full text -->
+                        <h3 class="text-2xl font-extrabold text-white" data-lang-key="logo_full">Business Analysis</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4" data-lang-key="footer_desc">نقدم خدمة تحليل العملاء المحتملين التي تحول بياناتك إلى رؤى استراتيجية قابلة للتطبيق لتحقيق نمو مستدام لأعمالك.</p>
+                    <div class="social-links flex space-x-3 space-x-reverse">
+                        <a href="https://web.facebook.com/Businessanalysis2004?locale=ar_AR" target="_blank" class="w-10 h-10 rounded-full bg-gray-700 hover:bg-primary-dark flex items-center justify-center text-lg transition duration-300"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/business.analysiss/" target="_blank" class="w-10 h-10 rounded-full bg-gray-700 hover:bg-primary-dark flex items-center justify-center text-lg transition duration-300"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/company/108225102/admin/dashboard/" target="_blank" class="w-10 h-10 rounded-full bg-gray-700 hover:bg-primary-dark flex items-center justify-center text-lg transition duration-300"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://x.com/business_ana123" target="_blank" class="w-10 h-10 rounded-full bg-gray-700 hover:bg-primary-dark flex items-center justify-center text-lg transition duration-300"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.tiktok.com/@business.analysiss?is_from_webapp=1&sender_device=pc" target="_blank" class="w-10 h-10 rounded-full bg-gray-700 hover:bg-primary-dark flex items-center justify-center text-lg transition duration-300"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Column 2: Quick Links --><div class="footer-column">
+                    <h3 class="text-xl font-bold mb-6" data-lang-key="footer_links_title">روابط سريعة</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#home" class="hover:text-white transition" data-lang-key="nav_home">الرئيسية</a></li>
+                        <li><a href="#value-proposition" class="hover:text-white transition" data-lang-key="nav_why_us">لماذا نحن</a></li>
+                        <li><a href="#problem" class="hover:text-white transition" data-lang-key="nav_problem">المشكلة</a></li>
+                        <li><a href="#process" class="hover:text-white transition" data-lang-key="nav_how_we_work">كيف نعمل</a></li>
+                        <li><a href="#report" class="hover:text-white transition" data-lang-key="nav_report">التقرير</a></li>
+                        <li><a href="#benefits" class="hover:text-white transition" data-lang-key="nav_benefits">الفوائد</a></li>
+                        <li><a href="#testimonials" class="hover:text-white transition" data-lang-key="nav_clients">آراء العملاء</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3: Services --><div class="footer-column">
+                    <h3 class="text-xl font-bold mb-6" data-lang-key="footer_services_title">خدماتنا</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition" data-lang-key="footer_service_1">تحليل العملاء المحتملين</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Contact - ADJUSTED PHONE NUMBER and CTA Button --><div class="footer-column">
+                    <h3 class="text-xl font-bold mb-6" data-lang-key="footer_contact_title">اتصل بنا</h3>
+                    <ul class="space-y-4 text-gray-400">
+                        <li class="flex items-start" data-lang-key="footer_email_text">
+                            <i class="fas fa-envelope text-lg ml-3 mt-1"></i> business.analysis.2004@gmail.com
+                        </li>
+                        <li class="flex items-start" data-lang-key="footer_location_text">
+                            <i class="fas fa-map-marker-alt text-lg ml-3 mt-1"></i> القاهرة، مصر
+                        </li>
+                        <li class="flex items-start" data-lang-key="footer_phone_text">
+                            <i class="fas fa-phone-alt text-lg ml-3 mt-1"></i> 01034927416
+                        </li>
+                        <li>
+                            <!-- FOOTER CTA BUTTON (Border Spin Applied) -->
+                            <a href="https://wa.me/201034927416?text=مرحباً، أريد الاستفسار عن خدمة تحليل العملاء المحتملين" class="cta-button-wrapper mt-3 inline-flex items-center bg-brand-cta text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-brand-cta-hover transition duration-300" target="_blank">
+                                <span class="button-content" data-lang-key="cta_whatsapp"><i class="fab fa-whatsapp ml-2"></i> راسلنا على الواتساب</span>
+                                <div class="border-spin-wrapper"><div class="border-spin"></div></div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-center text-gray-500 text-sm">
+                <p data-lang-key="footer_copyright">جميع الحقوق محفوظة &copy; 2023 Business Analysis</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // === Language Content Configuration ===
+        const AR = 'ar';
+        const EN = 'en';
+
+        const langContent = {
+            [AR]: {
+                // Meta & Titles
+                'page_title': 'Business Analysis | حلول تحليل العملاء المحتملين للشركات',
+                'meta_description': 'نقدم خدمة تحليل العملاء المحتملين لشركتك. احصل على تقارير دقيقة ورؤى استراتيجية لتحقيق نمو مستدام لأعمالك.',
+                'h1_seo': 'حلول تحليل العملاء المحتملين للشركات لتحقيق نمو مستدام',
+                
+                // Dynamic Text (Splash & Hero)
+                'splash_text': 'Business Analysis: هي العقل الذكي الذي يقرأ السوق بشكل احترافي',
+                'typewriter_text': 'اكتشف عملائك الحقيقيين وازدد نموًا',
+
+                // Header & Nav
+                'logo_full': 'Business Analysis',
+                'lang_toggle': 'English',
+                'nav_home': 'الرئيسية',
+                'nav_why_us': 'لماذا نحن',
+                'nav_problem': 'المشكلة',
+                'nav_how_we_work': 'كيف نعمل',
+                'nav_report': 'التقرير',
+                'nav_benefits': 'الفوائد',
+                'nav_clients': 'العملاء',
+                'cta_header': 'راسلنا',
+                'cta_mobile': 'راسلنا الآن',
+                
+                // Hero Section
+                'hero_subtext': 'نقدم خدمة تحليل العملاء المحتملين التي تحول بياناتك إلى رؤى استراتيجية قابلة للتطبيق لتحقيق نمو مستدام لأعمالك',
+                'cta_discover': 'اكتشف كيف نعمل',
+                'cta_whatsapp': 'راسلنا على الواتساب',
+
+                // WhatsApp Card
+                'whatsapp_card_title': 'خبير التحليل في انتظارك',
+                'whatsapp_card_status': 'متوفر الآن للبدء',
+                'whatsapp_card_message': 'حان وقت الكشف عن استراتيجيتك القادمة. تحدث مع خبيرنا الآن وابدأ رحلة النمو!',
+                'whatsapp_card_cta': 'تواصل مع الخبير فوراً',
+
+                // Value Proposition
+                'value_tag': 'قيمة استثنائية',
+                'value_title': 'جودة تحليل استثنائية، أسعار ليست كبيرة',
+                'value_subtext': 'نقدم تحليل أعمال متميز بأسعار تنافسية لأننا نؤمن بأن كل صاحب مشروع يستحق فرصة النجاح. خبرتنا المتخصصة تمكننا من تقديم تحليلات دقيقة وفعالة بتكلفة تناسبك.',
+                'value_objection_title': 'كيف نتغلب على مخاوف عملائنا؟',
+                'objection1_title': 'ثقة تامة في خدمتنا',
+                'objection1_text': 'نعالج عدم الثقة في الخدمة غير الملموسة بتقديم عينات من عملنا السابق (عند الطلب) وشهادات عملاء موثوقين، بالإضافة إلى ضمان جودة النتائج. أنت ترى القيمة قبل أن تستثمر بشكل كامل.',
+                'objection2_title': 'أسعار تنافسية ومُجدية',
+                'objection2_text': 'نقدم حلولاً مرنة تتناسب مع الميزانيات المحدودة، مع التركيز على العائد على الاستثمار. تحليلنا ليس مجرد تكلفة، بل استثمار يعود عليك بفوائد أكبر بكثير.',
+                'objection3_title': 'خبرة متكاملة ونتائج دقيقة',
+                'objection3_text': 'نؤمن بقوة الخبرة المتخصصة والعميقة. خبرائنا يمتلكون سنوات من الممارسة والأبحاث المتواصلة التي تضمن دقة التحليل وعمقه، وهو ما يفوق أحياناً الجهد المتفرق لفريق كبير.',
+                
+                // Problem Section
+                'problem_title': 'التحدي الذي يواجه معظم أصحاب المشاريع',
+                'problem_text_1': 'يعاني العديد من أصحاب المشاريع الناشئة والصغيرة من نفس التحدي: من هم عملائي الحقيقيون؟ وما الذي يدفعهم للشراء؟',
+                'problem_text_2': 'كثير منهم يتخذ قراراته بناءً على افتراضات غامضة بدلًا من حقائق واضحة، وهنا تبدأ الخسارة أو البطء في النمو.',
+                'problem_text_3': 'عدم وضوح هوية العملاء واحتياجاتهم الحقيقية يعيق حتى أكثر الأفكار واعدة.',
+
+                // Process Section
+                'process_tag': 'منهجية العمل',
+                'process_title': 'كيف نقوم بتحليل عملائك المحتملين',
+                'process_subtext': 'عملية مدروسة بدقة شديدة من مصادر كبيرة لتحويل البيانات المعقدة إلى رؤى واضحة',
+                'step1_title': 'جمع البيانات',
+                'step1_title_hidden': 'جمع البيانات',
+                'step1_desc': 'نقوم بجمع البيانات الأساسية عن مشروعك دون الحاجة إلى معلومات سرية.',
+                'step1_point_1': 'اسم مشروعك ومجال عملك',
+                'step1_point_2': 'نوع المنتج أو الخدمة المقدمة',
+                'step1_point_3': 'طريقة البيع (أونلاين أو في مكان معين)',
+                'step1_point_4': 'أكثر الأسئلة والاعتراضات تكرارًا',
+                'step2_title': 'البحث والتحليل',
+                'step2_title_hidden': 'البحث والتحليل',
+                'step2_desc_1': 'نقوم بالبحث والتحليل العميق بناءً على خطط مدروسة بدقة وعناية شديدة. هذا الأساس الذي بنينا عليه شركتنا.',
+                'step2_desc_2': 'لتحصل على أكثر فائدة ممكنة من تحليل العملاء المحتملين الخاص بك، نستخدم أدوات ومنهجيات متقدمة.',
+                'step3_title': 'تسليم التقرير',
+                'step3_title_hidden': 'تسليم التقرير',
+                'step3_desc_1': 'نقوم بتسليمك ملف PDF شامل يحتوي على كل ما تحتاج لمعرفته عن عملائك المحتملين.',
+                'step3_desc_2': 'التقرير سيساعدك على فهم عملائك بشكل أعمق واتخاذ قرارات تسويقية أكثر فعالية لتحقيق أهدافك.',
+
+                // Report Section
+                'report_title': 'ماذا يحتوي التقرير؟',
+                'report_subtext': 'تقريرنا الشامل سيمنحك صورة كاملة عن عملائك المحتملين لتمكنك من اتخاذ قرارات استراتيجية مدروسة.',
+                'feature1_title': 'العميل المحتمل',
+                'feature1_text': 'المعلومات الديموغرافية، مكان السكن، السلوك، أماكن التواجد على وسائل التواصل',
+                'feature2_title': 'دوافع الشراء',
+                'feature2_text': 'الأسباب التي تدفعهم للشراء والمشاكل التي يواجهونها',
+                'feature3_title': 'معوقات الشراء',
+                'feature3_text': 'الأسباب التي تخيفهم من الشراء وتمنعهم من اتخاذ القرار',
+                'feature4_title': 'الاهتمامات',
+                'feature4_text': 'مجالات اهتماماتهم وأنشطتهم المفضلة',
+                'feature5_title': 'فكرة تسويقية',
+                'feature5_text': 'فكرة تسويقية مناسبة لاستهدافهم بشكل فعال',
+                'feature6_title': 'المنافسين',
+                'feature6_text': 'تحليل المنافسين ونقاط قوتهم وضعفهم',
+                'report_note_title': 'توجيهات عملية للتنفيذ',
+                'report_note_text': 'سنزودك أيضاً بتوجيهات عملية حول كيفية تنفيذ هذه الرؤى وتحويلها إلى إجراءات ملموسة تحقق النتائج المرجوة. ستتعلم كيفية تطبيق كل بند من بنود التقرير بشكل عملي لتحقيق أقصى استفادة من البيانات التي نحصل عليها.',
+
+                // Benefits Section
+                'benefits_tag': 'القيمة المضافة',
+                'benefits_title': 'ماذا سوف تستفيد من هذا التقرير؟',
+                'benefits_subtext': 'فوائد استراتيجية ستغير طريقة عملك بشكل جذري',
+                'benefit1_title': 'تشكيل المنتج حسب العميل',
+                'benefit1_text': 'ستكون قادرًا على تشكيل منتجك أو خدمتك على مقاس عميلك بالتفصيل، وعندما تفعل هذا تبدأ نقطة نجاحك.',
+                'benefit2_title': 'استهداف دقيق',
+                'benefit2_text': 'ستكون قادرًا على استهداف العملاء بشكل دقيق وفعال، والوصول إلى العملاء المحتملين الذين قد يكون من الصعب الوصول إليهم.',
+                'benefit3_title': 'التواصل الفعال',
+                'benefit3_text': 'ستكون قادرًا على التعامل مع عملائك من حيث عدة جوانب مثل عملية البيع والتحدث معهم وتبرير السعر.',
+                'benefit4_title': 'حل المشكلات',
+                'benefit4_text': 'ستكون قادرًا على حل أي مشكلة تواجه عملائك عند استخدامهم لخدمتك أو منتجك بشكل سهل.',
+                'benefit5_title': 'عميل أكثر تفاعلاً',
+                'benefit5_text': 'عميلك سيكون أكثر تفاعلاً معك عندما تقدم له ما يريده بالضبط لأنك ستكون قد فهمت عميلك.',
+                'benefit6_title': 'نمو مستدام',
+                'benefit6_text': 'عندما يكون منتجك أو خدمتك على مقاس عميلك المحتمل، سيكون من السهل على عميلك الوصول إليك.',
+                
+                // Testimonials
+                'testimonial_tag': 'كلمة عملائنا',
+                'testimonial_title': 'آراء العملاء',
+                'testimonial_subtext': 'قصص نجاح حقيقية تحققت بفضل تحليل العملاء المحتملين الدقيق',
+                'quote1_text': '"كنت متشككاً في البداية، لكن التحليل كشف لي فرصاً في السوق لم أكن أتخيل وجودها. زادت مبيعاتي بنسبة 60% بعد تطبيق التوصيات."',
+                'quote1_name': 'رائد أعمال',
+                'quote1_role': 'مؤسس مشروع تقني',
+                'quote2_text': '"التكلفة كانت أقل بكثير مما توقعت. التحليل كان شاملاً ومفصلاً، وساعدني في تعديل استراتيجيتي وتجنب العديد من الأخطاء."',
+                'quote2_name': 'سارة الخالد',
+                'quote2_role': 'مالكة متجر إلكتروني',
+                'quote3_text': '"لم يكن تحليلاً تقليدياً، بل دراسة متعمقة لمشروعي بالكامل. التوصيات كانت عملية وقابلة للتنفيذ وفعلاً حققت نتائج ملموسة."',
+                'quote3_name': 'خالد السعدي',
+                'quote3_role': 'مؤسس شركة ناشئة',
+                'quote4_text': '"كنت أعتقد أن تحليل الأعمال رفاهية، لكنه كان أفضل استثمار قمت به. وفر علي آلاف الدولارات ووفر وقتاً ثميناً."',
+                'quote4_name': 'فاطمة القحطاني',
+                'quote4_role': 'مديرة مشاريع',
+                'quote5_text': '"التحليل كشف لي نقاط ضعف في مشروعي لم أكن أدركها. بعد المعالجة، زادت أرباحي بنسبة 40% في أقل من 3 أشهر."',
+                'quote5_name': 'أحمد المرشدي',
+                'quote5_role': 'صاحب مطعم',
+                'quote6_text': '"الشيء الأهم أن التحليل كان مخصصاً لمشروعي وليس قالباً جاهزاً. هذا ما جعله دقيقاً ومفيداً حقاً."',
+                'quote6_name': 'نورة الرشيد',
+                'quote6_role': 'مستثمرة',
+                'quote7_text': '"الدعم المستمر بعد التسليم كان مميزاً. لم أتوقع أن أحصل على كل هذه القيمة بهذا السعر المعقول."',
+                'quote7_name': 'يوسف الحربي',
+                'quote7_role': 'مطور تطبيقات',
+                'quote8_text': '"تحليل السوق الذي قدموه كان مفصلاً ودقيقاً. ساعدني في تحديد شريحة العملاء المناسبة وتصميم حملات تسويقية ناجحة."',
+                'quote8_name': 'لمى العتيبي',
+                'quote8_role': 'صاحبة ماركة أزياء',
+                'quote9_text': '"كنت أعاني من تراجع المبيعات، تحليل الأعمال كشف الأسباب الحقيقية ووضع خطة علاجية. خلال شهرين، عادت المبيعات للنمو."',
+                'quote9_name': 'طارق الفهد',
+                'quote9_role': 'مسوق إلكتروني',
+                'quote10_text': '"التحليل ساعد فريق المبيعات لدينا على فهم لغة العميل الحقيقية. تحسنت نسبة الإغلاق بشكل ملحوظ وزاد متوسط قيمة الصفقة."',
+                'quote10_name': 'هناء السليم',
+                'quote10_role': 'مديرة مبيعات',
+                
+                // Final CTA
+                'cta_final_title': 'هل أنت جاهز للنمو؟',
+                'cta_final_subtext': 'ابدأ رحلة التحول الاستراتيجي وارتقِ بأعمالك إلى مستويات جديدة من النجاح',
+                
+                // Footer
+                'footer_desc': 'نقدم خدمة تحليل العملاء المحتملين التي تحول بياناتك إلى رؤى استراتيجية قابلة للتطبيق لتحقيق نمو مستدام لأعمالك.',
+                'footer_links_title': 'روابط سريعة',
+                'footer_services_title': 'خدماتنا',
+                'footer_service_1': 'تحليل العملاء المحتملين',
+                'footer_contact_title': 'اتصل بنا',
+                'footer_email_text': 'business.analysis.2004@gmail.com',
+                'footer_location_text': 'القاهرة، مصر',
+                'footer_phone_text': '01034927416',
+                'footer_copyright': 'جميع الحقوق محفوظة &copy; 2023 Business Analysis',
+            },
+            [EN]: {
+                // Meta & Titles
+                'page_title': 'Business Analysis | Lead Customer Solutions for Companies',
+                'meta_description': 'We offer lead customer analysis services for your company. Get accurate reports and strategic insights for sustainable business growth.',
+                'h1_seo': 'Lead Customer Analysis Solutions for Sustainable Business Growth',
+
+                // Dynamic Text (Splash & Hero)
+                'splash_text': 'Business Analysis: The smart mind that professionally reads the market',
+                'typewriter_text': 'Discover Your Real Customers and Achieve Growth',
+                
+                // Header & Nav
+                'logo_full': 'Business Analysis',
+                'lang_toggle': 'العربية',
+                'nav_home': 'Home',
+                'nav_why_us': 'Why Us',
+                'nav_problem': 'The Challenge',
+                'nav_how_we_work': 'How We Work',
+                'nav_report': 'The Report',
+                'nav_benefits': 'Benefits',
+                'nav_clients': 'Clients',
+                'cta_header': 'Contact Us',
+                'cta_mobile': 'Contact Us Now',
+
+                // Hero Section
+                'hero_subtext': 'We provide lead customer analysis services that turn your data into actionable strategic insights for sustainable business growth.',
+                'cta_discover': 'Discover How We Work',
+                'cta_whatsapp': 'Message us on WhatsApp',
+
+                // WhatsApp Card
+                'whatsapp_card_title': 'The Analysis Expert is Waiting',
+                'whatsapp_card_status': 'Available now to start',
+                'whatsapp_card_message': 'It\'s time to uncover your next strategy. Talk to our expert now and start the journey to growth!',
+                'whatsapp_card_cta': 'Contact Expert Immediately',
+                
+                // Value Proposition
+                'value_tag': 'Exceptional Value',
+                'value_title': 'Exceptional Analysis Quality, Reasonable Prices',
+                'value_subtext': 'We offer distinguished business analysis at competitive prices because we believe every business owner deserves a chance to succeed. Our specialized expertise ensures accurate and effective analyses at a cost that suits you.',
+                'value_objection_title': 'How do we overcome our clients\' fears?',
+                'objection1_title': 'Complete Trust in Our Service',
+                'objection1_text': 'We address the lack of trust in intangible services by providing samples of our previous work (upon request) and reliable client testimonials, in addition to guaranteeing result quality. You see the value before fully investing.',
+                'objection2_title': 'Competitive and Viable Prices',
+                'objection2_text': 'We offer flexible solutions that fit limited budgets, focusing on Return on Investment (ROI). Our analysis is not just a cost, but an investment that brings you much greater benefits.',
+                'objection3_title': 'Integrated Expertise and Accurate Results',
+                'objection3_text': 'We believe in the power of specialized and deep expertise. Our experts have years of continuous practice and research that guarantee the accuracy and depth of the analysis, often surpassing the scattered effort of a large team.',
+                
+                // Problem Section
+                'problem_title': 'The Challenge Facing Most Business Owners',
+                'problem_text_1': 'Many startup and small business owners face the same challenge: Who are my real customers? And what motivates them to buy?',
+                'problem_text_2': 'Many make decisions based on vague assumptions rather than clear facts, which is where losses or slow growth begin.',
+                'problem_text_3': 'The lack of clarity regarding customer identity and their real needs hinders even the most promising ideas.',
+
+                // Process Section
+                'process_tag': 'Methodology',
+                'process_title': 'How We Analyze Your Leads',
+                'process_subtext': 'A meticulously studied process from extensive sources to transform complex data into clear insights.',
+                'step1_title': 'Data Collection',
+                'step1_title_hidden': 'Data Collection',
+                'step1_desc': 'We collect essential data about your project without requiring confidential information.',
+                'step1_point_1': 'Your project name and industry',
+                'step1_point_2': 'Type of product or service offered',
+                'step1_point_3': 'Method of sale (online or physical location)',
+                'step1_point_4': 'Most frequent questions and objections',
+                'step2_title': 'Research & Analysis',
+                'step2_title_hidden': 'Research & Analysis',
+                'step2_desc_1': 'We conduct deep research and analysis based on carefully planned strategies. This is the foundation upon which we built our company.',
+                'step2_desc_2': 'To get the most benefit possible from your lead analysis, we use advanced tools and methodologies.',
+                'step3_title': 'Report Delivery',
+                'step3_title_hidden': 'Report Delivery',
+                'step3_desc_1': 'We deliver a comprehensive PDF file containing everything you need to know about your potential customers.',
+                'step3_desc_2': 'The report will help you understand your customers deeply and make more effective marketing decisions to achieve your goals.',
+
+                // Report Section
+                'report_title': 'What Does the Report Contain?',
+                'report_subtext': 'Our comprehensive report will give you a complete picture of your potential customers, enabling you to make informed strategic decisions.',
+                'feature1_title': 'Potential Customer',
+                'feature1_text': 'Demographic information, residence, behavior, social media presence',
+                'feature2_title': 'Buying Motivations',
+                'feature2_text': 'The reasons that drive them to buy and the problems they face',
+                'feature3_title': 'Buying Obstacles',
+                'feature3_text': 'The reasons that scare them from buying and prevent them from making a decision',
+                'feature4_title': 'Interests',
+                'feature4_text': 'Their areas of interest and favorite activities',
+                'feature5_title': 'Marketing Idea',
+                'feature5_text': 'A suitable marketing idea to target them effectively',
+                'feature6_title': 'Competitors',
+                'feature6_text': 'Analysis of competitors and their strengths and weaknesses',
+                'report_note_title': 'Practical Implementation Guidelines',
+                'report_note_text': 'We will also provide you with practical guidelines on how to implement these insights and turn them into tangible actions that achieve the desired results. You will learn how to apply every point of the report practically to maximize the benefit from the data we obtain.',
+
+                // Benefits Section
+                'benefits_tag': 'Added Value',
+                'benefits_title': 'What will you gain from this report?',
+                'benefits_subtext': 'Strategic benefits that will fundamentally change the way you do business',
+                'benefit1_title': 'Tailoring the Product to the Customer',
+                'benefit1_text': 'You will be able to tailor your product or service to fit your customer in detail, and when you do this, your point of success begins.',
+                'benefit2_title': 'Accurate Targeting',
+                'benefit2_text': 'You will be able to target customers accurately and effectively, reaching potential customers who may be difficult to reach.',
+                'benefit3_title': 'Effective Communication',
+                'benefit3_text': 'You will be able to deal with your customers in terms of several aspects, such as the sales process, talking to them, and justifying the price.',
+                'benefit4_title': 'Problem Solving',
+                'benefit4_text': 'You will be able to easily solve any problem your customers face when using your service or product.',
+                'benefit5_title': 'More Engaged Customer',
+                'benefit5_text': 'Your customer will be more engaged with you when you offer exactly what they want because you will have understood your customer.',
+                'benefit6_title': 'Sustainable Growth',
+                'benefit6_text': 'When your product or service is tailored to your potential customer, it will be easy for your customer to reach you.',
+
+                // Testimonials
+                'testimonial_tag': 'Our Clients\' Words',
+                'testimonial_title': 'Client Reviews',
+                'testimonial_subtext': 'Real success stories achieved thanks to accurate lead analysis.',
+                'quote1_text': '"I was skeptical at first, but the analysis revealed market opportunities I hadn\'t imagined existed. My sales increased by 60% after implementing the recommendations."',
+                'quote1_name': 'Raed A\'mal (Entrepreneur)',
+                'quote1_role': 'Tech Project Founder',
+                'quote2_text': '"The cost was much lower than I expected. The analysis was comprehensive and detailed, helping me adjust my strategy and avoid many mistakes."',
+                'quote2_name': 'Sara Al-Khaled',
+                'quote2_role': 'E-commerce Store Owner',
+                'quote3_text': '"It wasn\'t traditional analysis, but a deep study of my entire project. The recommendations were practical, actionable, and truly achieved tangible results."',
+                'quote3_name': 'Khalid Al-Saadi',
+                'quote3_role': 'Startup Founder',
+                'quote4_text': '"I used to think business analysis was a luxury, but it was the best investment I ever made. It saved me thousands of dollars and invaluable time."',
+                'quote4_name': 'Fatima Al-Qahtani',
+                'quote4_role': 'Project Manager',
+                'quote5_text': '"The analysis exposed weaknesses in my project I hadn\'t realized. After addressing them, my profits increased by 40% in less than 3 months."',
+                'quote5_name': 'Ahmed Al-Murshidi',
+                'quote5_role': 'Restaurant Owner',
+                'quote6_text': '"The most important thing is that the analysis was customized for my project, not a template. That\'s what made it truly accurate and useful."',
+                'quote6_name': 'Noura Al-Rasheed',
+                'quote6_role': 'Investor',
+                'quote7_text': '"The continuous support after delivery was excellent. I never expected to get all this value at such a reasonable price."',
+                'quote7_name': 'Yusuf Al-Harbi',
+                'quote7_role': 'App Developer',
+                'quote8_text': '"The market analysis they provided was detailed and precise. It helped me identify the right customer segment and design successful marketing campaigns."',
+                'quote8_name': 'Lama Al-Otaibi',
+                'quote8_role': 'Fashion Brand Owner',
+                'quote9_text': '"I was suffering from declining sales; the business analysis revealed the real reasons and set a corrective plan. Within two months, sales were back on track."',
+                'quote9_name': 'Tariq Al-Fahd',
+                'quote9_role': 'E-Marketer',
+                'quote10_text': '"The analysis helped our sales team understand the real language of the customer. The closing rate significantly improved, and the average deal value increased."',
+                'quote10_name': 'Hana Al-Saleem',
+                'quote10_role': 'Sales Manager',
+            }
+        };
+
+
+        // === Core Variables and Initialization ===
+        const typedTextElement = document.getElementById('typed-text');
+        const header = document.getElementById('header');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const navLinks = document.querySelectorAll('#mobileMenu a, #nav a');
+        const whatsappCard = document.getElementById('whatsappCard');
+        const closeCardBtn = document.getElementById('closeCard');
+        const background = document.getElementById('parallax-background'); 
+        const langToggle = document.getElementById('langToggle');
+        
+        // Splash Screen Elements
+        const splashScreen = document.getElementById('splash-screen');
+        const splashTextElement = document.getElementById('splash-text');
+        const splashLogo = document.getElementById('splash-logo');
+        const analysisIconWrapper = document.getElementById('analysis-icon-wrapper');
+
+        let index = 0;
+        let currentLanguage = AR; // Default language
+
+        // === Language Switching Functionality ===
+        function updateLanguage(newLang) {
+            currentLanguage = newLang;
+            const content = langContent[newLang];
+            const isRTL = newLang === AR;
+            
+            // 1. Update HTML attributes for direction and language
+            document.documentElement.lang = newLang;
+            document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+
+            // 2. Update dynamic text content based on data-lang-key
+            const elements = document.querySelectorAll('[data-lang-key]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-lang-key');
+                if (content[key]) {
+                    // For all elements, update textContent
+                    el.textContent = content[key];
+                    
+                    // Special handling for meta description update
+                    if (key === 'meta_description') {
+                         document.querySelector('meta[name="description"]').setAttribute('content', content[key]);
+                    }
+                }
+            });
+
+            // 3. Restart Typewriter with new text
+            updateTypewriterText(content['typewriter_text']);
+
+            // 4. Update Header CTA Icon margin (for RTL/LTR)
+            const headerCtaIcon = document.querySelector('#header .cta-button-wrapper .button-content i.fa-whatsapp');
+            const discoverCtaIcon = document.querySelector('#home .cta-button-wrapper:has(span[data-lang-key="cta_discover"]) .button-content i');
+
+            if (headerCtaIcon) {
+                if (isRTL) {
+                     headerCtaIcon.classList.remove('mr-2');
+                     headerCtaIcon.classList.add('ml-2');
+                } else {
+                     headerCtaIcon.classList.remove('ml-2');
+                     headerCtaIcon.classList.add('mr-2');
+                }
+            }
+            if (discoverCtaIcon) {
+                 // The arrow needs to flip direction in LTR and RTL
+                 if (isRTL) {
+                    discoverCtaIcon.style.transform = 'rotate(0deg)';
+                 } else {
+                    discoverCtaIcon.style.transform = 'rotate(180deg)';
+                 }
+            }
+        }
+        
+        function toggleLanguage() {
+            const newLang = currentLanguage === AR ? EN : AR;
+            localStorage.setItem('lang', newLang);
+            updateLanguage(newLang);
+        }
+
+        langToggle.addEventListener('click', toggleLanguage);
+        
+        // === 1. Typewriter Effect (Hero Section) ===
+        let textToType; // Global variable defined outside the function
+
+        function updateTypewriterText(newText) {
+            textToType = newText;
+            index = 0;
+            typedTextElement.textContent = ''; // Clear previous text
+            typeWriter();
+        }
+
+        function typeWriter() {
+            if (index < textToType.length) {
+                typedTextElement.innerHTML = textToType.substring(0, index + 1) + '<span class="typed-text"></span>';
+                index++;
+                setTimeout(typeWriter, 80); 
+            } else {
+                typedTextElement.innerHTML = textToType; 
+            }
+        }
+
+        // === 2. Background Fade Effect (Fade out image when scrolling down) ===
+        function handleBackgroundFade() {
+            const scrollThreshold = window.innerHeight * 0.7; // Start fading out after 70% of viewport height
+            const maxOpacityScroll = window.innerHeight * 0.3; // Maximum scroll distance over which opacity changes
+
+            const scrollY = window.scrollY;
+
+            // Calculate opacity based on scroll position
+            if (scrollY <= scrollThreshold) {
+                // Opacity remains 1 (fully visible) until the threshold
+                background.style.opacity = 1;
+            } else if (scrollY > scrollThreshold) {
+                // Fade out starts
+                let fadeProgress = (scrollY - scrollThreshold) / maxOpacityScroll;
+                fadeProgress = Math.min(fadeProgress, 1); // Clamp maximum progress to 1
+                
+                // Opacity goes from 1 down to 0
+                background.style.opacity = 1 - fadeProgress;
+            } else {
+                // Ensure full opacity if at the very top
+                 background.style.opacity = 1;
+            }
+        }
+
+
+        // === 3. Scroll-Triggered Animations (Intersection Observer) ===
+        function setupIntersectionObserver() {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            };
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const delay = parseInt(entry.target.getAttribute('data-delay')) || 0;
+                        const targetClass = entry.target.classList[1]; // e.g., 'fade-in-up'
+                        
+                        setTimeout(() => {
+                            entry.target.classList.add('in-view');
+                            observer.unobserve(entry.target); // Stop observing once animated
+                        }, delay);
+                    }
+                });
+            }, observerOptions);
+
+            elements.forEach(el => observer.observe(el));
+        }
+
+        // === 4. Header Scroll Effect ===
+        function handleHeaderScroll() {
+            if (window.scrollY > 50) {
+                header.classList.add('header-bg-scrolled');
+            } else {
+                header.classList.remove('header-bg-scrolled');
+            }
+        }
+
+        // === 5. Mobile Menu Logic ===
+        mobileMenuBtn.addEventListener('click', () => {
+            const isExpanded = mobileMenu.classList.toggle('-translate-x-full');
+            mobileMenuBtn.innerHTML = isExpanded ? 
+                '<i class="fas fa-bars"></i>' : '<i class="fas fa-times"></i>';
+        });
+
+        // Close mobile menu on link click
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (mobileMenu.classList.contains('-translate-x-full') === false) {
+                    mobileMenu.classList.add('-translate-x-full');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+        });
+
+        // === 6. Floating WhatsApp Card Logic (INSTANT DISPLAY + 2 MIN RE-APPEAR) ===
+        const REAPPEAR_DELAY_MS = 120000; // 2 minutes
+
+        function showWhatsappCard() {
+            whatsappCard.classList.remove('hidden');
+            whatsappCard.classList.add('show');
+        }
+
+        // Close card functionality
+        closeCardBtn.addEventListener('click', () => {
+            whatsappCard.classList.remove('show');
+            // Hide fully after CSS transition finishes (400ms)
+            setTimeout(() => {
+                whatsappCard.classList.add('hidden'); 
+            }, 400); 
+
+            // Schedule reappearance after 2 minutes
+            setTimeout(showWhatsappCard, REAPPEAR_DELAY_MS);
+        });
+
+        // === 7. Smooth Scrolling for Anchor Links (Native HTML is better, this is for adjustment) ===
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Adjust scroll position for the fixed header height (80px)
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80, 
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // === 8. Splash Screen Logic (Updated for mobile wrapping) ===
+        function startSplashScreen() {
+            const totalDisplayTime = 2000; // 2 seconds total duration
+
+            // Apply splash text from language content
+            splashTextElement.textContent = langContent[currentLanguage]['splash_text'];
+
+            // Remove the overflow: hidden and border-right after typing animation ends
+            splashTextElement.addEventListener('animationend', (event) => {
+                if (event.animationName === 'typing') {
+                    splashTextElement.style.borderRight = 'none';
+                    // NEW: Allow wrapping if the screen is mobile sized after animation
+                    if (window.innerWidth <= 768) {
+                        splashTextElement.classList.add('wrap-text');
+                    }
+                }
+            });
+            
+            // Re-trigger animation properties since text content was updated (needs a small delay/re-application)
+            // Note: Since splash text animation properties are defined in CSS, we just need to ensure the animation fires.
+            // We rely on CSS animation handling here.
+
+            // Make icon and logo visible after respective delays
+            setTimeout(() => {
+                analysisIconWrapper.classList.add('show');
+            }, 500); // 0.5s after start
+
+            setTimeout(() => {
+                splashLogo.classList.add('show');
+            }, 1000); // 1.0s after start
+
+            // Fade out splash screen after totalDisplayTime
+            setTimeout(() => {
+                splashScreen.classList.add('fade-out');
+                // Remove splash screen from DOM after fade out
+                splashScreen.addEventListener('transitionend', () => {
+                    splashScreen.remove();
+                });
+            }, totalDisplayTime);
+        }
+
+
+        // === Final Setup on Load ===
+        window.addEventListener('load', () => {
+            // Check for saved language, default to Arabic
+            const savedLang = localStorage.getItem('lang');
+            if (savedLang && savedLang !== AR) {
+                currentLanguage = savedLang;
+            }
+            
+            // Apply initial language settings
+            updateLanguage(currentLanguage);
+
+            startSplashScreen(); // Start splash screen on load
+            
+            // 1. Show Whatsapp Card immediately on load (after splash screen)
+            setTimeout(showWhatsappCard, 2500); 
+
+            setTimeout(() => { // Delay hero typing effect until after splash screen is gone
+                // Typewriter is already initiated via updateLanguage
+                setupIntersectionObserver();
+            }, 2500); // Corresponds to total splash screen animation duration + fade out buffer
+        });
+        
+        window.addEventListener('scroll', () => {
+            handleHeaderScroll();
+            handleBackgroundFade(); // New: Handle background fade-out/in
+        });
+
+        window.addEventListener('resize', () => {
+             handleBackgroundFade(); // Check fade on resize
+        });
+        
+        // Initial call for immediate header styling and element checking
+        handleHeaderScroll();
+    </script>
+</body>
+</html>
